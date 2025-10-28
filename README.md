@@ -45,11 +45,11 @@ flowchart TD
     T --> U
     
     %% ---------------- Phase 4: Assessment Test ----------------
-    U --> V[QwikHire Assessment Assignment]
-    V --> W[General Round]
-    V --> X[Position Round]
-    V --> Y[Aptitude Round (Optional)]
-    V --> Z[Coding Round (Optional)]
+    V[QwikHire Assessment Assignment] --> W[General Round]
+V --> X[Position Round]
+V --> Y[Aptitude Round\nOptional]
+V --> Z[Coding Round\nOptional]
+
     
     W --> AA[AI Evaluation & Scoring]
     X --> AA
