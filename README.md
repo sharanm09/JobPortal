@@ -1,3 +1,106 @@
+Job Portal – End-to-End Business Flow (Presentation Draft)
+
+Overview
+This platform streamlines the recruitment lifecycle by orchestrating a single, continuous flow: recruiters publish a role, the system distributes it broadly, relevant candidates are sourced and organized, resumes are centralized and interpreted, candidates are scored against the role, screening and assessments validate fit, documents are collected and verified, interviews progress through structured rounds, and hiring decisions are finalized with clear communication. This README explains that flow in clear business terms (no code, no APIs) so stakeholders can align quickly on how the experience works from start to finish.
+
+How the Flow Works (Narrative)
+1) A recruiter creates a job post with key details (title, skills, experience, location, CTC range, employment type, responsibilities, apply link). As soon as it’s saved, the system prepares the content for distribution and pushes it across chosen channels (social and job boards). The recruiter gets a confirmation and can track live status.
+2) As the job goes live, the platform starts sourcing. Recruiters can search manually by skill, experience, CTC, and location, while the system simultaneously discovers profiles from external sources. All prospective profiles are normalized into a single “candidate pool,” deduplicated, and enriched.
+3) Resumes arrive from multiple sources (direct applies, recruiter uploads, email, referrals, social). The system stores files securely and tracks metadata (who, what, when, source). Each resume is processed to extract structured attributes (skills, experience, education, projects) to make searching and comparison effortless.
+4) For each job, the system maps JD attributes to resume attributes and produces a match score using weighted criteria (skills, experience, CTC alignment, location, education). Recruiters see ranked lists to focus on the most relevant candidates first.
+5) Recruiters then run a quick screening: verify basics (experience, current role, notice period, CTC), confirm interest, and capture remarks. Candidates that pass are invited to assessments tailored to the job’s competencies.
+6) Assessments (technical/functional/aptitude/communication) are scheduled and auto-evaluated wherever possible. Results are recorded and surfaced alongside match scores and screening notes for a complete view.
+7) Candidates upload required documents (ID, education, experience letters, payslips). The system organizes and tracks verification status so recruiters know exactly what’s pending and what’s verified.
+8) Interviews progress through structured rounds (technical, functional, managerial/HR, client). Scheduling, reminders, feedback, and decisions are centralized so every stakeholder stays aligned. Candidates who pass move forward automatically to the next round.
+9) Final shortlisting consolidates scores, feedback, verification status, and availability into a single decision. Offers are prepared, acceptance is tracked, and onboarding prep starts. Candidates who aren’t selected receive considerate communications. All outcomes feed analytics for continuous improvement.
+
+Phases (Pin‑to‑Pin Business Flow)
+Phase 1 – Job Posting & Distribution
+- Goal: Publish a complete, attractive job post and make it visible where the right talent is likely to see it.
+- Key Actions: Recruiter drafts job, saves; system standardizes content; distribution is triggered; recruiter receives posting and distribution status; candidates can apply via the chosen link/form.
+
+Phase 2 – Candidate Sourcing & Search
+- Goal: Build a high‑quality candidate pool relevant to the role.
+- Key Actions: Manual recruiter search by skill, experience, location, CTC; automated sourcing aggregates profiles from multiple sources; deduplication and enrichment; pool remains searchable and actionable.
+
+Phase 3 – Resume Collection & Storage
+- Goal: Centralize all resumes and make them searchable and reliable.
+- Key Actions: Capture resumes from direct applies, uploads, email, referrals; store files securely; attach metadata (source, time, status); keep a clean, organized library for the team.
+
+Phase 4 – Parsing, Matching & Scoring
+- Goal: Turn unstructured resumes and JDs into structured, comparable profiles and rank by fit.
+- Key Actions: Extract JD attributes; extract resume attributes; compare and score using weighted criteria; present ranked candidates; allow filters (e.g., location, notice period).
+
+Phase 5 – Screening (Pre‑Interview Check)
+- Goal: Validate essentials quickly and capture recruiter judgment.
+- Key Actions: Confirm experience, current role, expected CTC, notice period, location preferences, interest level; record remarks; decide next steps.
+
+Phase 6 – Assessments
+- Goal: Objectively evaluate skills and knowledge aligned to the role.
+- Key Actions: Select test type(s); schedule and deliver; auto‑evaluate where possible; store results; combine results with match scores.
+
+Phase 7 – Document Collection & Verification
+- Goal: Ensure credentials and claims are true and complete.
+- Key Actions: Candidate uploads documents; system tracks verification status; recruiters verify or flag; maintain overall status for quick reference.
+
+Phase 8 – Interviews & Feedback
+- Goal: Conduct structured, fair, and timely interviews with excellent coordination.
+- Key Actions: Schedule rounds; send invites and reminders; capture structured feedback (ratings + comments); move candidates forward on pass; record decisions consistently.
+
+Phase 9 – Final Shortlisting & Offer
+- Goal: Make confident decisions and close the loop professionally.
+- Key Actions: Consolidate evidence (scores, feedback, verifications); shortlist; prepare and share offer details; track acceptances; notify all candidates; prepare onboarding.
+
+Roles & Responsibilities
+- Recruiter: Creates jobs, sources candidates, screens, coordinates interviews, verifies docs, finalizes offers.
+- Hiring Manager: Reviews shortlisted candidates, interviews, provides feedback, signs off on final decision.
+- Interviewers: Conduct rounds, submit structured feedback, and recommend decisions.
+- Candidate: Applies, provides documents, completes assessments, attends interviews, accepts offers.
+- Admin/Operations: Oversees governance, SLAs, compliance, and reporting.
+
+JD Attributes (What We Capture from Job Descriptions)
+- Job title, company name, location, employment type, work mode.
+- Experience range, salary/CTC range, skills required.
+- Role description, responsibilities, must‑haves vs good‑to‑haves.
+- Education/certifications, benefits, application instructions/deadline, contact info.
+
+Resume Attributes (What We Capture from Resumes)
+- Personal: name, email, phone, address, LinkedIn/portfolio (if present).
+- Professional: current designation/company, current & expected CTC, notice period, total experience, domain/management exposure.
+- Skills: technical, domain, soft skills; proficiency levels; certifications; languages.
+- Experience: companies, roles, durations, responsibilities, achievements, technologies, team size, reporting lines, reasons for change (if stated).
+- Education: degrees, institutions, year(s), specialization, academic projects/achievements.
+- Additional: projects, publications, awards, volunteer work, references, work authorization, availability.
+
+Candidate Progression Logic (At‑a‑Glance)
+- New → Sourced/Applied → Parsed & Scored → Screened → Assessment → Interview Round(s) → Verified → Shortlisted → Offer → Accepted/Declined → Onboarding
+
+Notifications & SLAs
+- Recruiter: job live, distribution status, new applies, screening due, interview reminders, verification status changes, decision deadlines.
+- Candidate: application received, test link/reminders, interview schedule/reminders, outcomes (each round), offer status.
+- Suggested SLAs: screening within 48 hours of application; feedback within 24 hours of interview; offer decision within 72 hours post‑final round (adjust per organization).
+
+Data Quality, Governance & Compliance (Non‑Technical Framing)
+- Consistency: standard fields for jobs and resumes; clear tagging of must‑have vs good‑to‑have.
+- Privacy: collect only necessary information; obtain consent; restrict access by role.
+- Auditability: retain activity logs for postings, screening decisions, interview outcomes, offers.
+- Fairness: structured feedback and criteria; minimize bias via standardized rubrics.
+
+Success Metrics (Business KPIs)
+- Job pipeline health: time‑to‑post, distribution reach, applies per role.
+- Sourcing efficiency: qualified candidates per role, source effectiveness, pool growth.
+- Screening/assessment: pass‑through rates, false positive/negative trends.
+- Interview velocity: time between rounds, completion rates, feedback turnaround.
+- Hiring quality & speed: time‑to‑hire, offer acceptance rate, first‑90‑day retention (if tracked).
+
+Glossary (Quick Reference)
+- JD: Job Description (the role’s requirements and responsibilities).
+- Candidate Pool: The unified list of sourced and applied candidates under consideration.
+- Parsing: Turning resumes/JDs into structured, comparable attributes.
+- Scoring: Weighted comparison of candidate attributes to JD requirements.
+- Verification: Validating documents and claims prior to offer.
+- Shortlisting: Selecting finalists based on evidence across stages.
+
 # Job Portal - Complete Project Flow Document
 
 ---
