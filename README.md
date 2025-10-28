@@ -1,5 +1,159 @@
 # Job Portal - Complete Project Flow Document
 
+## Complete Project Flow Overview
+
+The following diagram illustrates the end-to-end flow of the Job Portal system, showing how recruiters and candidates move through each phase from job creation to final hiring decisions.
+
+```mermaid
+flowchart TD
+    A[Recruiter Login] --> B[Create Job Post]
+    B --> C[Job Validation & Storage]
+    C --> D[Automatic Distribution]
+    D --> E[Social Media Platforms]
+    D --> F[Job Portals]
+    E --> G[LinkedIn]
+    E --> H[X/Twitter]
+    E --> I[Facebook]
+    E --> J[Instagram]
+    F --> K[Naukri]
+    F --> L[Indeed]
+    F --> M[LinkedIn Jobs]
+    
+    G --> N[Candidate Applications]
+    H --> N
+    I --> N
+    J --> N
+    K --> N
+    L --> N
+    M --> N
+    
+    N --> O[Resume Collection]
+    O --> P[Resume Processing Pipeline]
+    P --> Q[AI Parsing & Scoring]
+    Q --> R[Candidate Pool Management]
+    
+    R --> S[Manual Candidate Search]
+    R --> T[Automated Sourcing]
+    S --> U[External Platform APIs]
+    T --> U
+    U --> V[LinkedIn API]
+    U --> W[Naukri API]
+    U --> X[Indeed API]
+    U --> Y[GitHub API]
+    
+    V --> Z[Candidate Normalization]
+    W --> Z
+    X --> Z
+    Y --> Z
+    Z --> R
+    
+    R --> AA[Automated Screening]
+    AA --> BB[Experience Verification]
+    AA --> CC[CTC Verification]
+    AA --> DD[Notice Period Check]
+    AA --> EE[Communication Assessment]
+    
+    BB --> FF[Screening Results]
+    CC --> FF
+    DD --> FF
+    EE --> FF
+    
+    FF --> GG[Assessment Test Assignment]
+    GG --> HH[General Round]
+    GG --> II[Position Round]
+    GG --> JJ[Aptitude Round - Optional]
+    GG --> KK[Coding Round - Optional]
+    
+    HH --> LL[AI Evaluation]
+    II --> LL
+    JJ --> LL
+    KK --> LL
+    
+    LL --> MM[Document Collection]
+    MM --> NN[Identity Proof]
+    MM --> OO[Education Certificates]
+    MM --> PP[Experience Letters]
+    MM --> QQ[Salary Slips]
+    MM --> RR[Address Proof]
+    
+    NN --> SS[Document Verification]
+    OO --> SS
+    PP --> SS
+    QQ --> SS
+    RR --> SS
+    
+    SS --> TT[Interview Process]
+    TT --> UU[Technical Round]
+    TT --> VV[Functional Round]
+    TT --> WW[Managerial Round]
+    TT --> XX[HR Round]
+    TT --> YY[Client Round - Optional]
+    
+    UU --> ZZ[Interview Feedback]
+    VV --> ZZ
+    WW --> ZZ
+    XX --> ZZ
+    YY --> ZZ
+    
+    ZZ --> AAA[Final Evaluation]
+    AAA --> BBB[Aggregate Reports]
+    BBB --> CCC[AI Resume Score]
+    BBB --> DDD[Screening Results]
+    BBB --> EEE[Assessment Scores]
+    BBB --> FFF[Interview Feedback]
+    BBB --> GGG[Document Verification]
+    
+    CCC --> HHH[Final Decision]
+    DDD --> HHH
+    EEE --> HHH
+    FFF --> HHH
+    GGG --> HHH
+    
+    HHH --> III[Selected Candidates]
+    HHH --> JJJ[Not Selected Candidates]
+    
+    III --> KKK[Offer Management]
+    KKK --> LLL[Salary Negotiation]
+    KKK --> MMM[Offer Letter Generation]
+    KKK --> NNN[Terms Finalization]
+    KKK --> OOO[Offer Acceptance]
+    
+    LLL --> PPP[Onboarding Preparation]
+    MMM --> PPP
+    NNN --> PPP
+    OOO --> PPP
+    
+    JJJ --> QQQ[Rejection Notification]
+    QQQ --> RRR[Thank You Email]
+    
+    PPP --> SSS[Hiring Complete]
+    RRR --> TTT[Process Complete]
+    
+    style A fill:#e1f5fe
+    style SSS fill:#c8e6c9
+    style TTT fill:#ffcdd2
+    style D fill:#fff3e0
+    style Q fill:#f3e5f5
+    style AA fill:#e8f5e8
+    style GG fill:#fff8e1
+    style MM fill:#fce4ec
+    style TT fill:#e0f2f1
+    style AAA fill:#f1f8e9
+```
+
+## Phase-by-Phase Flow Summary
+
+| Phase | Process | Key Activities | Outcome |
+|-------|---------|----------------|---------|
+| **Phase 1** | Job Posting & Distribution | Create job post, validate fields, distribute across platforms | Job live on multiple channels |
+| **Phase 2** | Candidate Sourcing & Searching | Manual search, automated sourcing, candidate pool management | Centralized candidate database |
+| **Phase 3** | Resume Collection & Storage | Collect resumes, process pipeline, AI parsing & scoring | Structured candidate data with ATS scores |
+| **Phase 4** | Automated Candidate Screening | Verify experience, CTC, notice period, communication assessment | Screening results with recommendations |
+| **Phase 5** | Assessment Test | General, Position, Aptitude, Coding rounds with AI evaluation | Test scores and selection status |
+| **Phase 6** | Document Collection & Verification | Collect and verify identity, education, experience documents | Verified candidate credentials |
+| **Phase 7** | Interview Process Management | Multi-level interviews with structured feedback | Interview scores and recommendations |
+| **Phase 8** | Final Decision & Notification | Aggregate all data, make final decision, notify candidates | Selected candidates proceed to offer, others receive rejection |
+
 ---
 
 ## PHASE 1: JOB POSTING & DISTRIBUTION
