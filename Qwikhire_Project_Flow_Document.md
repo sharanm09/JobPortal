@@ -1,10 +1,6 @@
-# Qwikhire Job Portal - Complete Project Flow Document
-
-## Executive Summary
-This document outlines the complete end-to-end business flow for the Qwikhire Job Portal system, covering all phases from job posting to final candidate selection. The system automates job distribution, candidate sourcing, resume processing, and interview management.
+# Job Portal - Complete Project Flow Document
 
 ---
-
 ## PHASE 1: JOB POSTING & DISTRIBUTION
 
 ### 1.1 Job Post Creation Flow
