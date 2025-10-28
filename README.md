@@ -76,7 +76,8 @@ V --> Z[Coding Round\nOptional]
     II --> KK[Functional Round]
     II --> LL[Managerial Round]
     II --> MM[HR Round]
-    II --> NN[Client Round (Optional)]
+    --> NN[Client Round\nOptional]
+
     
     JJ --> OO[Interview Feedback]
     KK --> OO
