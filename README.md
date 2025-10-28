@@ -1,279 +1,590 @@
-Job Portal – End-to-End Business Flow (Presentation Draft)
-
-Overview
-This platform streamlines the recruitment lifecycle by orchestrating a single, continuous flow: recruiters publish a role, the system distributes it broadly, relevant candidates are sourced and organized, resumes are centralized and interpreted, candidates are scored against the role, screening and assessments validate fit, documents are collected and verified, interviews progress through structured rounds, and hiring decisions are finalized with clear communication. This README explains that flow in clear business terms (no code, no APIs) so stakeholders can align quickly on how the experience works from start to finish.
-
-
-Roles & Responsibilities
-- Recruiter: Creates jobs, sources candidates, screens, coordinates interviews, verifies docs, finalizes offers.
-- Hiring Manager: Reviews shortlisted candidates, interviews, provides feedback, signs off on final decision.
-- Interviewers: Conduct rounds, submit structured feedback, and recommend decisions.
-- Admin/Operations: Oversees governance, SLAs, compliance, and reporting.
-
-JD Attributes (What We Capture from Job Descriptions)
-- Job title, company name, location, employment type, work mode.
-- Experience range, salary/CTC range, skills required.
-- Role description, responsibilities, must‑haves vs good‑to‑haves.
-- Education/certifications, benefits, application instructions/deadline, contact info.
-
-Resume Attributes (What We Capture from Resumes)
-- Personal: name, email, phone, address, LinkedIn/portfolio (if present).
-- Professional: current designation/company, current & expected CTC, notice period, total experience, domain/management exposure.
-- Skills: technical, domain, soft skills; proficiency levels; certifications; languages.
-- Experience: companies, roles, durations, responsibilities, achievements, technologies, team size, reporting lines, reasons for change (if stated).
-- Education: degrees, institutions, year(s), specialization, academic projects/achievements.
-- Additional: projects, publications, awards, volunteer work, references, work authorization, availability.
-
-Candidate Progression Logic (At‑a‑Glance)
-- New → Sourced/Applied → Parsed & Scored → Screened → Assessment → Interview Round(s) → Verified → Shortlisted → Offer → Accepted/Declined → Onboarding
-
-
 # Job Portal - Complete Project Flow Document
 
 ---
 ## PHASE 1: JOB POSTING & DISTRIBUTION
 
-### 1.1 Job Post Creation Flow
-**Objective**: Allow recruiters to create job posts and automatically distribute across multiple channels
+1.1 Job Post Creation Flow
+Objective: Enable recruiters to create job posts and automatically distribute them across multiple channels. This feature streamlines the hiring process by capturing job requirements once and publishing to multiple platforms for maximum reach.
 
-**Process Flow**:
-1. **Recruiter Login** → Access recruiter dashboard
-2. **Create Job Post** → Fill job posting form with required fields
-3. **Validation** → System validates all required fields
-4. **Job ID Generation** → System generates unique job ID
-5. **Job Storage** → Job details stored in system
-6. **Distribution Trigger** → Automatic distribution process begins
+Process Flow:
+1. Recruiter Login → Access recruiter dashboard
+2. Create Job Post → Fill out the job posting form with required fields
+3. Validation → System validates all mandatory fields
+4. Job ID Generation → System generates a unique job ID
+5. Job Storage → Job details stored securely in the system database
+6. Distribution Trigger → Automatic job distribution process starts
 
-**Input Fields Required**:
-- Job Title (mandatory)
-- Skills Required (list of skills)
-- Budget/CTC Range (minimum and maximum values)
-- Experience Level (minimum and maximum years)
-- Job Location (city/state)
-- Employment Type (Full-time, Part-time, Contract, Internship)
-- Description & Responsibilities (detailed text)
-- Apply Link/Form URL (where candidates apply)
-- Company Information
-- Contact Details
+Input Fields Required:
 
-**System Response**: Job created successfully with unique ID and distribution status
+| Field Name         | Type                 | Mandatory | Description                                           |
+|--------------------|----------------------|-----------|-------------------------------------------------------|
+| job_title          | Text                 | Yes       | Name of the job/position                              |
+| skills_required    | Array/List of Text   | Yes       | Required technical or functional skills               |
+| ctc_min            | Number               | Yes       | Minimum salary/CTC offered                            |
+| ctc_max            | Number               | Yes       | Maximum salary/CTC offered                            |
+| experience_min     | Number               | Yes       | Minimum years of experience                           |
+| experience_max     | Number               | Yes       | Maximum years of experience                           |
+| job_location       | Text                 | Yes       | City/State/Country of the job                         |
+| employment_type    | Enum                 | Yes       | Full-time / Part-time / Contract / Internship         |
+| job_description    | Textarea             | Yes       | Detailed description of the job responsibilities      |
+| apply_link         | URL                  | Yes       | Link to the application form or platform              |
+| company_name       | Text                 | Yes       | Name of the hiring company                            |
+| company_description| Textarea             | No        | Brief about the company                               |
+| contact_email      | Email                | Yes       | Recruiter contact email                               |
+| contact_phone      | Text                 | No        | Recruiter contact phone number                        |
+| job_id             | Auto-generated       | Yes       | Unique identifier for the job post                    |
+| posting_date       | Date                 | Auto      | Date when the job is posted                           |
+| expiry_date        | Date                 | Optional  | Date when the job posting expires                     |
 
-### 1.2 Automatic Distribution Flow
-**Objective**: Automatically post jobs to multiple platforms
+System Response: Job is successfully created with a unique Job ID and distribution status.
 
-**Distribution Channels**:
-1. **Social Media Platforms**
-   - LinkedIn
-   - X/Twitter
-   - Facebook
-   - Instagram
+1.2 Automatic Distribution Flow
+Objective: Automatically post jobs to multiple social media platforms and job portals.
 
-2. **Job Portals**
-   - Naukri
-   - Indeed
-   - LinkedIn Jobs
-   - Monster
+Distribution Channels:
+- Social Media Platforms: LinkedIn, X (Twitter), Facebook, Instagram
+- Job Portals: Naukri, Indeed, LinkedIn Jobs
 
-**Distribution Process**:
-1. **Job Analysis** → System analyzes job requirements
-2. **Platform Selection** → System selects appropriate distribution channels
-3. **Content Adaptation** → Job content formatted for each platform
-4. **Automatic Posting** → Jobs posted to selected platforms
-5. **Status Tracking** → Success/failure tracked for each platform
-6. **Notification** → Recruiter notified of distribution results
+Job Distribution Flow:
+1. Analyze Job → Identify key requirements, skills, location, and salary
+2. Select Platforms → Choose suitable job boards based on job type
+3. Adapt Content → Format the job post for each platform
+4. Post Automatically → Publish jobs using APIs or approved third-party services
+5. Track Status → Monitor posting success or failure on each platform
+6. Notify Recruiter → Inform the recruiter about the distribution results
 
-**Error Handling**:
-- Failed posts retry automatically
-- Manual retry option for failed distributions
-- Detailed status reports for troubleshooting
+1.3 Social Media & Job Portal Integration
+LinkedIn
+API: LinkedIn Job Posting API
+Auth: OAuth 2.0
+Endpoints: POST: /jobPostings,  PUT: /jobPostings/{id},      DELETE: /jobPostings/{id}
+Documentation: LinkedIn API Docs
+Naukri
+API: Workable/Naukri Job Posting API
+Auth: API Key
+Integration: Third-party ATS or approved API services
+Documentation: Naukri Integration
+Indeed
+API: Indeed Job Sync API
+Auth: OAuth 2.0
+Endpoints: POST /jobs, PUT /jobs/{id}, DELETE /jobs/{id}
+Documentation: Indeed API Docs
+Facebook
+API: Facebook Pages API
+Auth: OAuth 2.0
+Endpoints: POST /{page-id}/feed, POST /{post-id}, DELETE /{post-id}
+Documentation: Facebook API Docs
+Instagram
+API: Instagram Graph API
+Auth: OAuth 2.0
+Endpoints: POST /{ig-user-id}/media, POST/{ig-user-id}/media_publish
+Documentation: Instagram Content Publishing
+X / Twitter
+API: X API
+Auth: OAuth 2.0
+Endpoints: POST /2/tweets, DELETE /2/tweets/{id}
+Documentation: X Developer API
 
-### 1.3 Notification System
-**Recruiter Notifications**:
-- Job posting confirmation
-- Distribution success/failure summary
-- Candidate application alerts
-
-**Candidate Notifications** (Optional):
-- "Job Live" email notifications
-- SMS alerts for relevant candidates
+1.4 Notification System
+Recruiter Notifications:
+Job posting confirmation
+Distribution success/failure summary
+Candidate application alerts
 
 ---
 
 ## PHASE 2: CANDIDATE SOURCING & SEARCHING
 
-### 2.1 Manual Candidate Search
-**Objective**: Allow recruiters to search for candidates manually
+2.1 Overview
+Objective: Enable recruiters to efficiently source candidates, either manually through direct input or automatically via integrations with multiple external platforms, and consolidate all candidate information into a centralized, easily manageable pool. This ensures a comprehensive database for current and future hiring needs, streamlining the recruitment process and reducing redundant efforts.
+Key Activities:
+Job search across external portals (LinkedIn, Naukri, Indeed, GitHub, etc.)
+Fetch relevant candidate/job data using APIs (or scraping where allowed)
+Filter candidates by experience, skills, location, and other parameters
+Store all potential profiles in a candidate pool for further processing
 
-**Search Parameters**:
-- Skills (multiple selection)
-- Experience range (minimum and maximum years)
-- Location (city/state/country)
-- Current CTC range
-- Education level
-- Availability status
 
-**Search Process**:
-1. **Search Criteria Input** → Recruiter enters search parameters
-2. **System Search** → System searches candidate database
-3. **Results Display** → Matching candidates displayed
-4. **Profile Review** → Recruiter reviews candidate profiles
-5. **Selection** → Recruiter selects relevant candidates
+2.2 Candidate Sourcing Methods
 
-**Search Results Include**:
-- Candidate profiles with basic information
-- Skills match percentage
-- Experience relevance score
-- Contact information (if available)
+A. Manual Candidate Search
+Objective: Recruiters search for candidates directly using filters and view results in the system.
 
-### 2.2 Automated Candidate Sourcing
-**Objective**: Automatically pull relevant candidates from external sources
+Search Parameters & Filters
 
-**Data Sources**:
-1. **LinkedIn** → Professional profiles and job seekers
-2. **Naukri** → Candidate database and profiles
-3. **Indeed** → Jobseeker profiles and resumes
-4. **GitHub** → Developer profiles and portfolios
-5. **Stack Overflow** → Developer profiles and expertise
+| Field Name        | Type               | Mandatory | Description                                                                 |
+|-------------------|--------------------|-----------|-----------------------------------------------------------------------------|
+| job_title         | Text               | Yes       | Title/designation of the role (e.g., “Software Engineer”, “HR Manager”)     |
+| skills            | Array/List of Text | Optional  | One or multiple technical/functional skills (e.g., React, Java, SQL)        |
+| experience_min    | Number             | Optional  | Minimum years of relevant experience                                        |
+| experience_max    | Number             | Optional  | Maximum years of relevant experience                                        |
+| ctc_min           | Number             | Optional  | Minimum current or expected CTC                                             |
+| ctc_max           | Number             | Optional  | Maximum current or expected CTC                                             |
+| location          | Text               | Optional  | City, state, or country                                                     |
+| education_level   | Text               | Optional  | Education level (Bachelor’s, Master’s, Diploma)                             |
+| employment_type   | Enum               | Optional  | Full-time, Part-time, Contract, Internship                                  |
+| availability_status| Enum              | Optional  | Available, Serving Notice, Not Available                                    |
+| source_platform   | Enum               | Optional  | Internal DB, LinkedIn, Naukri, Indeed, GitHub, Stack Overflow               |
 
-**Sourcing Process**:
-1. **Job Analysis** → System extracts key requirements from job posting
-2. **Search Query Generation** → System creates optimized search queries
-3. **Multi-source Search** → System searches across all sources
-4. **Data Aggregation** → System combines results from all sources
-5. **Deduplication** → System removes duplicate candidates
-6. **Candidate Pool Update** → New candidates added to system
 
-### 2.3 Candidate Pool Management
-**Candidate Information Stored**:
-- Candidate ID and personal details
-- Contact information (email, phone)
-- Skills and technical expertise
-- Work experience and years
-- Current and expected salary
-- Location and availability
-- Source platform information
-- Profile URLs and links
-- Last updated timestamp
-- Current status in system
+Process Flow:
+1. Recruiter inputs search filters
+2. System searches the candidate database
+3. Matching candidates are displayed in a ranked list
+4. Recruiter reviews profiles and selects relevant candidates
+
+2.3 Candidate Pool Management
+Objective: Maintain a centralized database of all potential candidates for future processing.
+Candidate Information Stored:
+
+Field Name
+Type
+Description
+candidate_id
+ Auto-generated
+Unique identifier for each candidate record
+full_name
+ Text
+Candidate’s full name
+email
+ Email
+Candidate’s email address
+phone_number
+ Text
+Candidate’s contact number
+alternate_contact
+ Text
+Alternate phone number (if provided)
+current_designation
+ Text
+Current job title or designation
+current_company
+ Text
+Current organization name
+skills
+ Array/List of Text
+Technical and functional skills of the candidate
+total_experience
+ Number
+Total years of professional experience
+relevant_experience
+ Number
+Years of experience relevant to the applied job
+current_ctc
+ Number
+Candidate’s current annual salary package (CTC)
+expected_ctc
+ Number
+Candidate’s expected annual salary package (CTC)
+notice_period
+ Text / Number
+Notice period duration (in days or weeks)
+preferred_location
+ Text
+Candidate’s preferred work location(s)
+current_location
+ Text
+Candidate’s current city/state/country
+education
+ Array/List
+Details of academic qualifications (degree, institution, year)
+certifications
+ Array/List
+Certifications or additional qualifications
+projects
+ Array/List
+Major projects handled by the candidate with technologies used
+languages_known
+ Array/List
+Languages spoken or written by the candidate
+resume_file_name
+ Text
+Original filename of the uploaded resume
+resume_file_url
+ URL
+Cloud storage link to access the candidate’s resume file
+resume_parsed_text
+ Long Text
+Extracted plain text content from the resume for indexing/search
+resume_upload_date
+ DateTime
+Date and time when the resume was uploaded
+source_platform
+ Enum
+Source from which the candidate was imported (LinkedIn, Naukri, Indeed, etc.)
+profile_url
+ URL
+Profile link on the original source platform
+availability_status
+ Enum
+Available, Serving Notice, Not Available
+application_status
+ Enum
+New, Screened, Shortlisted, Interviewing, Selected, Rejected
+screening_remarks
+ Textarea
+Recruiter notes or remarks after screening
+ai_score
+ Number
+AI-calculated score based on resume-job match
+skills_match_percentage
+ Number
+Percentage of skill match between resume and job post
+education_match_score
+ Number
+Relevance score based on education background
+location_match_score
+ Number
+Score representing geographical fit for the job
+created_at
+ DateTime
+Timestamp when the candidate profile was created in the system
+updated_at
+ DateTime
+Timestamp when the candidate profile was last updated
+created_by
+ Text
+Recruiter or system ID that created the candidate record
+verified_by
+ Text
+Recruiter who verified candidate documents or details
+remarks
+ Textarea
+General notes or comments on the candidate
+
+Candidate Pool Operations:
+Add new candidates manually.
+Update existing candidate information.
+Filter and sort candidates by skills, experience, location, CTC, and availability.
+Track recruitment status of each candidate across all phases.
+
+2.4 Integration Notes
+LinkedIn API → OAuth 2.0 authentication, use GET /people to fetch candidate profiles.
+Naukri API → API key authentication, fetch resumes via Workable integration.
+Indeed API → OAuth 2.0, GET /jobs or resume API for candidate search.
+GitHub API → Search developers by language, repository, and activity.
+Stack Overflow → Jobs API or allowed scraping to gather developer profiles.
+Note: Always comply with API rate limits and platform terms of service.
+
+
+Connecting to Social Media & Job Platforms (Live Candidate Search)
+Authentication
+ Each platform requires a specific authentication method:
+
+
+LinkedIn: OAuth 2.0 → obtain an access token for the application.
+Naukri: API key → provided by Naukri/Workable integration.
+Indeed: OAuth 2.0 or API key depending on plan.
+GitHub: Personal Access Token or OAuth App token.
+Stack Overflow / Others: Usually public API or allowed scraping.
+
+
+Process:
+Recruiter initiates search from the UI.
+Backend (Search Aggregation Service) injects stored credentials for each platform into the connector API request.
+Platform-Specific Connectors
+ Each platform has a connector module in the backend, responsible for:
+Translating generic search filters into platform-specific queries.
+Calling the platform API or permitted scraping endpoints.
+Returning results in a raw format for normalization.
+Normalization
+After raw results are fetched:
+Platform-specific fields are mapped to your Candidate Pool schema.
+Example: LinkedIn positions.title → current_designation; GitHub languages → skills.
+Salary/CTC converted to standard units; experience in years.
+Deduplication
+Checks duplicates across multiple platforms using email, phone, profile URL, or fuzzy matching.
+Merges partial profiles, keeping source platform references.
+Indexing & Response
+Normalized & deduped candidate profiles are indexed in Elasticsearch/MongoDB.
+Response sent back to recruiter UI with ranking, skill-match %, AI score, etc.
+Optional Live Fetch vs Cache
+live_fetch=true → backend calls external connectors in real-time.
+live_fetch=false → only queries internal candidate pool (faster, no external API usage).
+
+
+Diagram – How Search Connects to Social Platforms
+Step1: Recruiter UI
+Step2: POST /api/candidates/search
+Step3: Search Aggregation Service / API Gateway
+Step4: Connectors Layer (parallel)
+├─ LinkedIn API
+├─ Naukri API
+├─ Indeed API
+├─ GitHub API
+└─ Internal DB
+Step5: Normalization & Deduplication
+Step6: Candidate Pool DB + Search Index
+Step7: Response -> Recruiter UI
 
 ---
 
 ## PHASE 3: RESUME COLLECTION & STORAGE
 
-### 3.1 Resume Collection Sources
-**Objective**: Centralize resumes from multiple sources
+3.1 Overview
+Objective: Centralize candidate resumes from multiple sources, extract structured information, and calculate ATS/AI match scores with job descriptions for better hiring decisions.
+Goals: Streamline the hiring process and reduce time-to-hire.
+Benefits: Improve candidate quality and reduce recruitment timings
+Key Activities:
+Collect resumes from multiple sources.
+Extract structured candidate information.
+Link resumes with job positions and job descriptions.
+Calculate resume-to-job match scores (ATS score).
+Store resume data and scores in the database linked to candidate and job IDs.
 
-**Collection Methods**:
-1. **Direct Applications** → Candidates apply through job posting links
-2. **Recruiter Upload** → Recruiters upload resumes manually
-3. **Email Parsing** → System parses resumes from email attachments
-4. **Third-party Referrals** → Resumes from partner companies
-5. **Social Media Downloads** → Download resumes from LinkedIn profiles
-6. **Bulk Import** → Import resumes from CSV/Excel files
 
-### 3.2 Resume Storage System
-**Storage Process**:
-1. **File Upload** → Resume files uploaded to system
-2. **File Validation** → System checks file format and size
-3. **Secure Storage** → Files stored in secure cloud storage
-4. **Metadata Creation** → System creates file information records
-5. **Indexing** → Files indexed for easy search and retrieval
+3.2 Resume Collection Sources
+Collection Method
+Description
+Direct Applications
+Candidates apply through job posting links.
+Recruiter Upload
+Recruiters manually upload resumes into the system.
+Email Parsing
+System parses resumes received via email attachments.
+Third-party Referrals
+Resumes sourced from partner companies.
+Social Media Downloads
+Download resumes from LinkedIn or other platforms.
+Bulk Import
+Import multiple resumes from CSV or Excel files.
 
-**Resume Information Tracked**:
-- Resume ID and filename
-- Candidate ID linkage
-- File size and type
-- Source platform
-- Upload date and time
-- Processing status
-- Parsing completion status
 
-### 3.3 Resume Processing Pipeline
-**Processing Steps**:
-1. **File Validation** → System checks file format and size
-2. **Security Scanning** → System scans for security threats
-3. **Text Extraction** → System extracts text from PDFs and documents
-4. **AI Processing** → System uses AI to extract structured data
-5. **Data Validation** → System validates extracted information
-6. **System Update** → System updates candidate records with new data
+3.3 Resume Storage System
+Storage Steps:
+File Upload → Candidates or recruiters upload resume files.
+File Validation → System checks for valid file format and size.
+Security Scanning → Scan for malware or security threats.
+Secure Storage → Upload and store files in secure cloud storage.
+Metadata Creation → Create a record with:
+Resume ID
+Candidate ID
+File name, type, size
+Source platform
+Upload date/time
+Processing status
+Indexing → Index resumes for search and retrieval.
+
+Resume Information Stored (DB Fields)
+Field Name
+Type
+Description
+resume_id
+ Auto-generated
+Unique ID for the resume
+candidate_id
+ Text
+Link to the candidate profile
+file_name
+ Text
+Original resume file name
+file_type
+ Text
+File type (PDF, DOC, DOCX)
+file_size
+ Number
+Size of the resume file
+source_platform
+ Enum
+Source (LinkedIn, Email, Upload, etc.)
+upload_date
+ DateTime
+Timestamp when uploaded
+parsing_status
+ Enum
+Pending, Completed, Failed
+structured_data
+ JSON
+Extracted candidate information
+ats_score
+ Number
+Resume-to-job match score
+job_id
+ Text
+Job position ID linked for scoring
+jd_text
+ Long Text
+Job description used for scoring
+
+
+3.4 Resume Processing Pipeline
+Step-by-Step Flow:
+File Validation
+Verify correct format (PDF, DOC, DOCX).
+Check file size limits.
+
+
+Security Scanning
+Scan resume files for malware or threats.
+
+
+Text Extraction
+Extract plain text content from resume files.
+
+
+Structured Data Extraction (AI)
+
+
+Use AI/NLP to extract:
+Skills
+Work experience
+Education
+Certifications
+Projects
+Languages
+
+
+Job Description Linking
+Fetch the job position and JD for which the candidate applied.
+
+
+ATS/AI Scoring
+Pass resume structured data + JD to AI (e.g., ChatGPT/NLP model).
+Compute resume-to-job match score, including:
+
+
+Skills match %
+Experience match
+Education match
+Keywords match
+
+
+Data Validation
+Validate extracted candidate data and scoring results.
+
+
+Database Storage
+Store structured resume data and ATS score separately.
+Link each resume to candidate ID and job ID.
+Save timestamps for upload, parsing, and scoring.
+
+3.5 Resume Scoring Weightage
+Component
+Weight (%)
+Description
+Skills Match
+ 40%
+Match between candidate skills and JD required skills.
+Experience Match
+ 25%
+Alignment of total and relevant work experience with JD requirements.
+Projects / Work Portfolio
+ 15%
+Relevance of projects handled and technologies used.
+Education Match
+ 5%
+Match of highest degree and relevant certifications.
+Job Title / Designation
+ 10%
+Alignment of current/previous job title with applied role.
+Keywords / ATS Terms
+ 5%
+Presence of JD-specific keywords in resume.
 
 ---
 
-## PHASE 4: RESUME PARSING & AI SCORING
+## PHASE 4: AUTOMATED CANDIDATE SCREENING
 
-### 4.1 AI-Powered Resume Parsing
-**Objective**: Extract structured data from resumes using AI technology
+4.1 Overview
+Objective: Automatically validate candidate details before formal interviews, ensuring candidates meet basic requirements and are fit for the role.
+Key Activities:
+Verify candidate experience, current role, and salary expectations.
+Check notice period and location preferences.
+Assess communication skills and interest level.
+Update candidate status and recommend next steps automatically.
 
-**AI Processing**:
-- Text analysis and understanding
-- Document structure recognition
-- Information extraction and categorization
-- Data validation and verification
+4.2 Screening Checklist
+Screening Aspect
+Description
+Experience Verification
+Confirm candidate’s work history and relevant roles.
+Current Role
+Verify current position and responsibilities.
+CTC Verification
+Check current and expected salary.
+Notice Period
+Check candidate availability timeline.
+Location Preference
+Confirm preferred work location.
+Communication Skills
+Assess basic language and communication through AI/NLP.
+Interest Level
+Determine interest in the specific role through automated responses.
 
-**Extracted Information**:
-- **Personal Information**: Name, email, phone, address
-- **Skills**: Technical skills with proficiency levels
-- **Experience**: Job history, companies, roles, duration
-- **Education**: Degrees, institutions, years
-- **Projects**: Project descriptions and technologies used
-- **Achievements**: Certifications, awards, publications
 
-### 4.2 Candidate Scoring System
-**Objective**: Rank candidates based on job fit using intelligent matching
+4.3 Automated Screening Process
+Step
+Description
+Candidate Assignment
+System automatically assigns candidate to screening pipeline.
+Data Extraction
+Parse and extract structured information from resume and application.
+Automated Verification
+Validate experience, current role, CTC, notice period, and location against JD requirements.
+AI/NLP Assessment
+Analyze communication skills and interest level from candidate inputs.
+Score Calculation
+Compute screening score to determine pass/fail/pending status.
+Status Update
+Update candidate profile in system with screening results and score.
+Next Step Recommendation
+System suggests: Shortlist, Review, or Reject based on score and checks.
 
-**Scoring Criteria** (Weighted System):
-1. **Skills Match** (40%) → Percentage of required skills possessed
-2. **Experience Match** (25%) → Years of experience relevance
-3. **CTC Match** (15%) → Salary expectations alignment
-4. **Location Fit** (10%) → Geographic compatibility
-5. **Education Match** (10%) → Educational background relevance
 
-**Scoring Process**:
-1. **Job Analysis** → System extracts requirements from job description
-2. **Data Comparison** → System compares job requirements with candidate profile
-3. **Score Calculation** → System calculates weighted scores for each criterion
-4. **Overall Rating** → System generates final match percentage
-5. **Ranking** → System ranks candidates by overall score
-
-**Scoring Output**:
-- Overall match percentage
-- Individual criterion scores
-- Skills match percentage
-- Experience relevance score
-- Salary alignment score
-- Location compatibility score
-- Education relevance score
+4.4 Screening Results Stored
+Field Name
+Type
+Description
+screening_status
+ Enum
+Passed / Failed / Pending
+screening_score
+ Number
+AI-calculated score for automated screening
+verification_details
+ JSON
+Collected data: experience, CTC, notice period, location checks
+communication_score
+ Number
+Score for communication and interest evaluation
+next_step_recommendation
+ Enum
+Shortlist / Review / Reject
+automated_remarks
+ Text
+Notes or observations from automated screening
+screening_completion_date
+ DateTime
+Timestamp when screening was completed
 
 ---
 
-## PHASE 5: CANDIDATE SCREENING
+## PHASE 5: QWIKHIRE ASSESSMENT TEST
 
-### 5.1 Pre-Interview Screening
-**Objective**: Validate candidate details before formal assessment
+5.1 Overview
+Objective: Assign an AI-driven assessment to candidates based on their Job Description (JD) and determine selection status automatically.
+Key Points:
+Test assigned automatically using candidate’s JD.
+AI evaluates responses.
+Four rounds available: General, Position, Aptitude (optional), Coding (optional).
+Candidate outcome: Selected or Not Selected after test completion.
 
-**Screening Checklist**:
-- **Experience Verification** → Confirm work history and roles
-- **Current Role** → Verify current position and responsibilities
-- **CTC Verification** → Confirm current and expected salary
-- **Notice Period** → Check availability timeline
-- **Location Preference** → Confirm work location preferences
-- **Communication Skills** → Basic language and communication assessment
-- **Interest Level** → Confirm interest in the specific role
 
-**Screening Process**:
-1. **Recruiter Assignment** → System assigns recruiter to candidate
-2. **Initial Contact** → Recruiter contacts candidate via call/email
-3. **Screening Call** → Recruiter conducts preliminary interview
-4. **Data Collection** → Recruiter gathers verification information
-5. **Status Update** → Recruiter updates candidate status in system
-6. **Next Step Decision** → System determines next step based on screening results
-
-**Screening Results**:
-- Screening status (passed/failed/pending)
-- Recruiter remarks and notes
-- Verification details collected
-- Next step recommendation
-- Screening completion date
+5.2 Test Rounds
+Round Type
+Description
+Optional?
+General Round
+Behavioral, communication, and basic understanding of role
+ No
+Position Round
+Job-specific functional/technical knowledge
+ No
+Aptitude Round
+Logical reasoning and problem-solving
+ Yes
+Coding Round
+Programming and technical problem-solving
+ Yes
 
 ---
 
@@ -321,113 +632,151 @@ Candidate Progression Logic (At‑a‑Glance)
 
 ---
 
-## PHASE 7: DOCUMENT COLLECTION & VERIFICATION
+## PHASE 6: DOCUMENT COLLECTION & VERIFICATION
+6.1 Overview
+Objective: Collect and verify candidate credentials to ensure authenticity before final hiring.
+Key Activities:
+Collect identity, education, experience, salary, address, and other supporting documents.
+Verify the authenticity of all submitted documents.
+Ensure all documents are accurate before final hiring decisions.
 
-### 7.1 Document Collection Process
-**Objective**: Collect and verify candidate credentials
+6.2 Required Documents
+Document Type
+Description
+Identity Proof
+Aadhaar, Passport, Driving License
+Education Certificates
+Degree certificates, mark sheets
+Experience Letters
+Previous employment letters
+Salary Slips
+Last 3 months payslips
+Address Proof
+Utility bills, bank statements
+Additional Documents
+Certifications, awards
 
-**Required Documents**:
-1. **Identity Proof** → Aadhaar, Passport, Driving License
-2. **Education Certificates** → Degree certificates, mark sheets
-3. **Experience Letters** → Previous employment letters
-4. **Salary Slips** → Last 3 months payslips
-5. **Address Proof** → Utility bills, bank statements
-6. **Additional Documents** → Certifications, awards
-
-**Collection Methods**:
-1. **Candidate Upload** → Direct upload via candidate portal
-2. **Email Submission** → Email attachments
-3. **Recruiter Upload** → Recruiter uploads on behalf
-4. **Bulk Collection** → Collect during interview process
-
-### 7.2 Document Verification System
-**Verification Process**:
-1. **Document Validation** → Check file format and authenticity
-2. **OCR Processing** → Extract text from documents
-3. **Data Extraction** → Extract key information
-4. **Cross-verification** → Match with resume data
-5. **Manual Review** → Recruiter verification
-6. **Status Update** → Update verification status
-
-**Verification Status Tracking**:
-- Document type and filename
-- Verification status (verified/pending/rejected)
-- Verified by recruiter ID
-- Verification completion date
-- Overall document verification status
+6.3 Document Collection Method
+Method
+Description
+Email Submission
+Candidate sends documents via email attachments.
 
 ---
 
-## PHASE 8: INTERVIEW PROCESS MANAGEMENT
+PHASE 7: INTERVIEW PROCESS MANAGEMENT
 
-### 8.1 Multi-Level Interview System
-**Objective**: Conduct structured interview rounds
+7.1 Overview
+Objective: Conduct structured interviews to assess candidates’ technical, functional, managerial, and cultural fit before final selection.
+Key Activities:
+Multi-level interviews based on job requirements.
+Schedule and manage interviews efficiently.
+Collect structured feedback and evaluation for each candidate.
 
-**Interview Levels**:
-1. **Technical Round** → Technical skills assessment
-2. **Functional Round** → Domain knowledge evaluation
-3. **Managerial Round** → Leadership and management skills
-4. **HR Round** → Cultural fit and behavioral assessment
-5. **Client Round** → Final client interview (if applicable)
+7.2 Interview Levels
+Level
+Purpose
+Technical Round
+Assess technical skills and problem-solving ability.
+Functional Round
+Evaluate domain-specific knowledge and job-related expertise.
+Managerial Round
+Assess leadership, management skills, and decision-making.
+HR Round
+Evaluate cultural fit, behavior, and communication skills.
+Client Round
+Final client evaluation (if applicable).
 
-### 8.2 Interview Scheduling & Management
-**Scheduling Process**:
-1. **Interviewer Assignment** → Assign interviewers for each round
-2. **Calendar Integration** → Sync with interviewer calendars
-3. **Time Slot Selection** → Choose available time slots
-4. **Candidate Notification** → Send interview invitations
-5. **Reminder System** → Automated reminders before interviews
-6. **Rescheduling** → Handle rescheduling requests
 
-**Interview Tracking**:
-- Candidate ID and job ID
-- Current interview level
-- Interview round details (level, type, interviewer)
-- Scheduled date and time
-- Interview status (completed/scheduled/cancelled)
-- Interview score and feedback
-- Pass/fail result for each round
+7.3 Interview Scheduling & Management
+Step
+Description
+Interviewer Assignment
+Assign interviewers for each round.
+Calendar Integration
+Sync interviews with interviewer calendars.
+Time Slot Selection
+Choose available time slots for each round.
+Candidate Notification
+Send interview invitations to candidates.
+Reminder System
+Automated reminders before scheduled interviews.
+Rescheduling
+Handle candidate or interviewer rescheduling requests.
 
-### 8.3 Interview Feedback System
-**Feedback Collection**:
-- **Structured Forms** → Standardized feedback forms
-- **Rating System** → Numerical ratings for different criteria
-- **Comments** → Detailed written feedback
-- **Recommendations** → Hire/No Hire recommendations
-- **Next Steps** → Suggestions for improvement
+
+7.4 Interview Tracking
+Field
+Description
+Candidate ID & Job ID
+Unique identifiers for tracking.
+Current Interview Level
+Round currently in progress.
+Interview Round Details
+Type of interview, assigned interviewer.
+Scheduled Date & Time
+Interview timing details.
+Interview Status
+Completed / Scheduled / Cancelled.
+Interview Score & Feedback
+Scores and comments recorded.
+Pass/Fail Result
+Outcome of each interview round.
+
+
+7.5 Interview Feedback System
+Step
+Description
+Structured Forms
+Use standardized forms for feedback.
+Rating System
+Numerical rating for different evaluation criteria.
+Comments
+Detailed written feedback from interviewer.
+Recommendations
+Hire / No Hire suggestions.
+Next Steps
+Suggestions for improvement or follow-up actions.
 
 ---
 
-## PHASE 9: FINAL SHORTLISTING & OFFER MANAGEMENT
+PHASE 8: FINAL DECISION & CANDIDATE NOTIFICATION
 
-### 9.1 Final Decision Process
-**Objective**: Conclude hiring workflow with final decisions
+8.1 Overview
+Objective: Ensure all candidate assessments, interviews, and documents are complete, collect any missing documents, determine final selection status, and notify candidates.
+Key Activities:
+Identify and collect missing documents from candidates.
+Aggregate all reports (resume, screening, assessments, interviews, documents).
+Determine final status: Selected or Not Selected.
+Send automated notifications to candidates about the outcome.
 
-**Decision Criteria**:
-- **Overall Interview Performance** → Average scores across rounds
-- **Technical Competency** → Technical round scores
-- **Cultural Fit** → HR round assessment
-- **Client Feedback** → Client round evaluation
-- **Document Verification** → Document status
-- **Reference Checks** → Background verification
+8.2 Missing Document Collection
+Step
+Description
+Check Document Completion
+System verifies which required documents are missing.
+Request Missing Documents
+Send email/SMS to candidate requesting pending documents.
+Receive & Verify Documents
+Candidate submits missing documents via email; system verifies authenticity.
 
-### 9.2 Offer Management System
-**Offer Process**:
-1. **Salary Negotiation** → Discuss compensation package
-2. **Offer Letter Generation** → Create formal offer letters
-3. **Terms Finalization** → Agree on joining terms
-4. **Offer Acceptance** → Candidate acceptance tracking
-5. **Onboarding Preparation** → Prepare for joining
 
-**Final Status Update**:
-- Candidate ID and job ID
-- Final selection status (shortlisted/rejected)
-- Offered CTC amount
-- Joining date
-- Notice period duration
-- Offer acceptance status
-- Offer acceptance date
-- Onboarding preparation status
+8.3 Final Evaluation Process
+Step
+Description
+Aggregate Reports
+Collect candidate data from: • AI Resume Score • Screening results • Assessment Test scores • Interview feedback • Document verification
+Final Status Decision
+Determine candidate status as Selected or Not Selected.
+
+
+8.4 Candidate Notification
+Type
+Description
+Selected Candidates
+Send congratulatory email/SMS with next steps (offer or joining instructions).
+Not Selected Candidates
+Send polite rejection email with optional feedback.
 
 ### 9.3 Notification & Communication
 **Automated Notifications**:
@@ -558,14 +907,13 @@ Candidate Progression Logic (At‑a‑Glance)
 | Layer | Technology |
 |-------|------------|
 | Frontend | React.js, TailwindCSS, Redux |
-| Backend | Node.js/Express, Spring Boot |
-| Database | MongoDB, PostgreSQL |
-| Cloud Storage | AWS S3, Google Cloud Storage |
-| AI/NLP | OpenAI GPT-4, AssemblyAI, AWS Textract |
+| Backend | Java Spring Boot |
+| Database | MySQL, MongoDB |
+| AI/NLP | ChatGPT |
 | Job Portals | LinkedIn API, Naukri API, Indeed API |
 | Social Media | LinkedIn API, Facebook Graph API, Twitter API |
-| Notifications | SendGrid, Twilio, Firebase |
-| Authentication | JWT, OAuth2 |
+| Notifications | Zepto Mail |
+| Authentication | JWT |
 
 ### Data Flow Architecture
 ```
@@ -583,55 +931,3 @@ Interview Rounds → Final Shortlisting → Offer Management → Onboarding
 6. **Payment Services** → Billing and subscription management
 
 ---
-
-## SUCCESS METRICS & KPIs
-
-### Key Performance Indicators
-1. **Job Posting Metrics**
-   - Jobs posted per day
-   - Distribution success rate
-   - Platform reach and engagement
-
-2. **Candidate Sourcing Metrics**
-   - Candidates sourced per job
-   - Source effectiveness
-   - Candidate quality scores
-
-3. **Processing Metrics**
-   - Resume parsing accuracy
-   - Scoring algorithm effectiveness
-   - Processing time per resume
-
-4. **Interview Metrics**
-   - Interview completion rate
-   - Time to hire
-   - Candidate satisfaction scores
-
-5. **Business Metrics**
-   - Cost per hire
-   - Revenue per recruiter
-   - System utilization rates
-
----
-
-## RISK MANAGEMENT & CONTINGENCY PLANNING
-
-### Technical Risks
-1. **API Rate Limits** → Implement rate limiting and fallback mechanisms
-2. **Data Security** → Encrypt sensitive data, implement access controls
-3. **System Downtime** → Implement redundancy and backup systems
-4. **Scalability Issues** → Design for horizontal scaling
-
-### Business Risks
-1. **Platform Policy Changes** → Monitor API terms and conditions
-2. **Competition** → Continuous feature development and improvement
-3. **Regulatory Compliance** → Ensure data privacy compliance
-4. **Cost Overruns** → Monitor usage and implement cost controls
-
----
-
-## CONCLUSION
-
-The Qwikhire Job Portal system provides a comprehensive solution for automated job posting, candidate sourcing, and interview management. The system integrates multiple external platforms, uses AI for intelligent matching, and provides a complete workflow from job creation to candidate onboarding.
-
-The modular architecture allows for easy scaling and feature additions, while the comprehensive tracking and analytics provide valuable insights for continuous improvement. The system addresses the key pain points in recruitment by automating manual processes and providing intelligent candidate matching capabilities.
