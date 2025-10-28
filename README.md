@@ -3,22 +3,25 @@
 ## Complete Project Flow Overview
 
 The following diagram illustrates the end-to-end flow of the Job Portal system, showing how recruiters and candidates move through each phase from job creation to final hiring decisions.
-
-```mermaid
 flowchart TD
+    %% ---------------- Phase 1: Job Posting ----------------
     A[Recruiter Login] --> B[Create Job Post]
     B --> C[Job Validation & Storage]
     C --> D[Automatic Distribution]
+    
     D --> E[Social Media Platforms]
     D --> F[Job Portals]
+    
     E --> G[LinkedIn]
     E --> H[X/Twitter]
     E --> I[Facebook]
     E --> J[Instagram]
+    
     F --> K[Naukri]
     F --> L[Indeed]
     F --> M[LinkedIn Jobs]
     
+    %% ---------------- Phase 2: Candidate Applications ----------------
     G --> N[Candidate Applications]
     H --> N
     I --> N
@@ -32,21 +35,25 @@ flowchart TD
     P --> Q[AI Parsing & Scoring]
     Q --> R[Candidate Pool Management]
     
+    %% ---------------- Phase 3: Candidate Sourcing ----------------
     R --> S[Manual Candidate Search]
     R --> T[Automated Sourcing]
+    
     S --> U[External Platform APIs]
     T --> U
+    
     U --> V[LinkedIn API]
     U --> W[Naukri API]
     U --> X[Indeed API]
     U --> Y[GitHub API]
     
-    V --> Z[Candidate Normalization]
+    V --> Z[Candidate Normalization & Deduplication]
     W --> Z
     X --> Z
     Y --> Z
     Z --> R
     
+    %% ---------------- Phase 4: Automated Screening ----------------
     R --> AA[Automated Screening]
     AA --> BB[Experience Verification]
     AA --> CC[CTC Verification]
@@ -58,6 +65,7 @@ flowchart TD
     DD --> FF
     EE --> FF
     
+    %% ---------------- Phase 5: Assessment Test ----------------
     FF --> GG[Assessment Test Assignment]
     GG --> HH[General Round]
     GG --> II[Position Round]
@@ -69,6 +77,7 @@ flowchart TD
     JJ --> LL
     KK --> LL
     
+    %% ---------------- Phase 6: Document Collection ----------------
     LL --> MM[Document Collection]
     MM --> NN[Identity Proof]
     MM --> OO[Education Certificates]
@@ -82,6 +91,7 @@ flowchart TD
     QQ --> SS
     RR --> SS
     
+    %% ---------------- Phase 7: Interview ----------------
     SS --> TT[Interview Process]
     TT --> UU[Technical Round]
     TT --> VV[Functional Round]
@@ -95,6 +105,7 @@ flowchart TD
     XX --> ZZ
     YY --> ZZ
     
+    %% ---------------- Phase 8: Final Decision & Notification ----------------
     ZZ --> AAA[Final Evaluation]
     AAA --> BBB[Aggregate Reports]
     BBB --> CCC[AI Resume Score]
@@ -103,7 +114,7 @@ flowchart TD
     BBB --> FFF[Interview Feedback]
     BBB --> GGG[Document Verification]
     
-    CCC --> HHH[Final Decision]
+    CCC --> HHH[Final Decision: Selected / Not Selected]
     DDD --> HHH
     EEE --> HHH
     FFF --> HHH
@@ -129,17 +140,80 @@ flowchart TD
     PPP --> SSS[Hiring Complete]
     RRR --> TTT[Process Complete]
     
-    style A fill:#e1f5fe
-    style SSS fill:#c8e6c9
-    style TTT fill:#ffcdd2
-    style D fill:#fff3e0
-    style Q fill:#f3e5f5
-    style AA fill:#e8f5e8
-    style GG fill:#fff8e1
-    style MM fill:#fce4ec
-    style TT fill:#e0f2f1
-    style AAA fill:#f1f8e9
-```
+    %% ---------------- Color Styling ----------------
+    style A fill:#e1f5fe,stroke:#0288d1,stroke-width:1px,color:#000
+    style B fill:#e1f5fe,stroke:#0288d1,stroke-width:1px,color:#000
+    style C fill:#e1f5fe,stroke:#0288d1,stroke-width:1px,color:#000
+    style D fill:#fff3e0,stroke:#fb8c00,stroke-width:1px,color:#000
+    style E fill:#fff3e0,stroke:#fb8c00,stroke-width:1px,color:#000
+    style F fill:#fff3e0,stroke:#fb8c00,stroke-width:1px,color:#000
+    style G fill:#fffde7,stroke:#fbc02d,stroke-width:1px,color:#000
+    style H fill:#fffde7,stroke:#fbc02d,stroke-width:1px,color:#000
+    style I fill:#fffde7,stroke:#fbc02d,stroke-width:1px,color:#000
+    style J fill:#fffde7,stroke:#fbc02d,stroke-width:1px,color:#000
+    style K fill:#fffde7,stroke:#fbc02d,stroke-width:1px,color:#000
+    style L fill:#fffde7,stroke:#fbc02d,stroke-width:1px,color:#000
+    style M fill:#fffde7,stroke:#fbc02d,stroke-width:1px,color:#000
+    style N fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,color:#000
+    style O fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,color:#000
+    style P fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,color:#000
+    style Q fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,color:#000
+    style R fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,color:#000
+    style S fill:#e8f5e9,stroke:#388e3c,stroke-width:1px,color:#000
+    style T fill:#e8f5e9,stroke:#388e3c,stroke-width:1px,color:#000
+    style U fill:#e8f5e9,stroke:#388e3c,stroke-width:1px,color:#000
+    style V fill:#e8f5e9,stroke:#388e3c,stroke-width:1px,color:#000
+    style W fill:#e8f5e9,stroke:#388e3c,stroke-width:1px,color:#000
+    style X fill:#e8f5e9,stroke:#388e3c,stroke-width:1px,color:#000
+    style Y fill:#e8f5e9,stroke:#388e3c,stroke-width:1px,color:#000
+    style Z fill:#e8f5e9,stroke:#388e3c,stroke-width:1px,color:#000
+    style AA fill:#e8f5e8,stroke:#2e7d32,stroke-width:1px,color:#000
+    style BB fill:#e8f5e8,stroke:#2e7d32,stroke-width:1px,color:#000
+    style CC fill:#e8f5e8,stroke:#2e7d32,stroke-width:1px,color:#000
+    style DD fill:#e8f5e8,stroke:#2e7d32,stroke-width:1px,color:#000
+    style EE fill:#e8f5e8,stroke:#2e7d32,stroke-width:1px,color:#000
+    style FF fill:#c8e6c9,stroke:#1b5e20,stroke-width:1px,color:#000
+    style GG fill:#fff8e1,stroke:#f57f17,stroke-width:1px,color:#000
+    style HH fill:#fff8e1,stroke:#f57f17,stroke-width:1px,color:#000
+    style II fill:#fff8e1,stroke:#f57f17,stroke-width:1px,color:#000
+    style JJ fill:#fff8e1,stroke:#f57f17,stroke-width:1px,color:#000
+    style KK fill:#fff8e1,stroke:#f57f17,stroke-width:1px,color:#000
+    style LL fill:#fff8e1,stroke:#f57f17,stroke-width:1px,color:#000
+    style MM fill:#fce4ec,stroke:#d81b60,stroke-width:1px,color:#000
+    style NN fill:#fce4ec,stroke:#d81b60,stroke-width:1px,color:#000
+    style OO fill:#fce4ec,stroke:#d81b60,stroke-width:1px,color:#000
+    style PP fill:#fce4ec,stroke:#d81b60,stroke-width:1px,color:#000
+    style QQ fill:#fce4ec,stroke:#d81b60,stroke-width:1px,color:#000
+    style RR fill:#fce4ec,stroke:#d81b60,stroke-width:1px,color:#000
+    style SS fill:#f8bbd0,stroke:#880e4f,stroke-width:1px,color:#000
+    style TT fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#000
+    style UU fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#000
+    style VV fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#000
+    style WW fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#000
+    style XX fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#000
+    style YY fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#000
+    style ZZ fill:#f1f8e9,stroke:#33691e,stroke-width:1px,color:#000
+    style AAA fill:#f1f8e9,stroke:#33691e,stroke-width:1px,color:#000
+    style BBB fill:#f1f8e9,stroke:#33691e,stroke-width:1px,color:#000
+    style CCC fill:#f1f8e9,stroke:#33691e,stroke-width:1px,color:#000
+    style DDD fill:#f1f8e9,stroke:#33691e,stroke-width:1px,color:#000
+    style EEE fill:#f1f8e9,stroke:#33691e,stroke-width:1px,color:#000
+    style FFF fill:#f1f8e9,stroke:#33691e,stroke-width:1px,color:#000
+    style GGG fill:#f1f8e9,stroke:#33691e,stroke-width:1px,color:#000
+    style HHH fill:#c5e1a5,stroke:#33691e,stroke-width:1px,color:#000
+    style III fill:#c8e6c9,stroke:#2e7d32,stroke-width:1px,color:#000
+    style JJJ fill:#ffcdd2,stroke:#b71c1c,stroke-width:1px,color:#000
+    style KKK fill:#fff9c4,stroke:#f9a825,stroke-width:1px,color:#000
+    style LLL fill:#fff9c4,stroke:#f9a825,stroke-width:1px,color:#000
+    style MMM fill:#fff9c4,stroke:#f9a825,stroke-width:1px,color:#000
+    style NNN fill:#fff9c4,stroke:#f9a825,stroke-width:1px,color:#000
+    style OOO fill:#fff9c4,stroke:#f9a825,stroke-width:1px,color:#000
+    style PPP fill:#c8e6c9,stroke:#2e7d32,stroke-width:1px,color:#000
+    style QQQ fill:#ffcdd2,stroke:#b71c1c,stroke-width:1px,color:#000
+    style RRR fill:#ffcdd2,stroke:#b71c1c,stroke-width:1px,color:#000
+    style SSS fill:#c8e6c9,stroke:#2e7d32,stroke-width:1px,color:#000
+    style TTT fill:#ffcdd2,stroke:#b71c1c,stroke-width:1px,color:#000
+
 
 ## Phase-by-Phase Flow Summary
 
